@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmino - Search</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="search-styles.css">
+</head>
+<body>
+    <!-- Dynamic Music Notes Background -->
+    <div id="music-notes-bg"></div>
+
+    <!-- Navbar -->
+    <header class="navbar" id="dynamicNavbar">
+        <div class="container">
+            <div class="navbar-content">
+                <!-- Left navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="index.html">
+                                <i data-lucide="home"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="active">
+                                <i data-lucide="search"></i>
+                                <span>Browse</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+    
+                <!-- Logo - centered on all screens -->
+                <div class="logo">
+                    <a href="index.html">
+                        <span>Mmino</span>
+                    </a>
+                </div>
+
+                <!-- Right navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="playlists.html">
+                                <i data-lucide="library"></i>
+                                <span>Playlists</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#profile">
+                                <i data-lucide="user"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="search-header">
+            <h1>Search</h1>
+            <p>Find your favorite songs, artists, albums and playlists</p>
+        </div>
+
+        <!-- Search input with neumorphic design -->
+        <div class="search-container">
+            <div class="search-input-wrapper">
+                <i data-lucide="search" class="search-icon"></i>
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Search for songs, artists, albums..." 
+                    autocomplete="off"
+                >
+                <button id="clearSearch" class="clear-search">
+                    <i data-lucide="x"></i>
+                </button>
+            </div>
+
+            <!-- Search suggestions dropdown -->
+            <div class="search-suggestions" id="searchSuggestions">
+                <div class="suggestions-section">
+                    <h3>Suggested Artists</h3>
+                    <div class="suggestion-items">
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://www.rollingstone.com/wp-content/uploads/2024/11/kendrick-lamar-takeaways-gnx.jpg?w=1581&h=1054&crop=1" alt="Kendrick Lamar">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Kendrick Lamar</div>
+                                    <div class="suggestion-type">Artist</div>
+                                </div>
+                                <div class="suggestion-meta">10.2M followers</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.X_A9t8cxx5cifdvcRV1PdQAAAA?rs=1&pid=ImgDetMainf" alt="Dua Lipa">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Dua Lipa</div>
+                                    <div class="suggestion-type">Artist</div>
+                                </div>
+                                <div class="suggestion-meta">8.5M followers</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/R.4ef4beed1502a3192a864c2cc71767a6?rik=3wtgOTtp9nQUQA&riu=http%3a%2f%2fs2.favim.com%2forig%2f37%2fblack-and-white-photoshoot-taylor-swift-Favim.com-299825.jpg&ehk=OeuFnlCeZRd7CpUAk5nBtXairh1cgio%2fkHq5F%2bZOyok%3d&risl=&pid=ImgRaw&r=0" alt="Taylor Swift">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Taylor Swift</div>
+                                    <div class="suggestion-type">Artist</div>
+                                </div>
+                                <div class="suggestion-meta">15.8M followers</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.uKSyKMmLfC-p0Xu3mWOnFwHaHa?rs=1&pid=ImgDetMain" alt="Drake">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Drake</div>
+                                    <div class="suggestion-type">Artist</div>
+                                </div>
+                                <div class="suggestion-meta">12.3M followers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions-section">
+                    <h3>Popular Songs</h3>
+                    <div class="suggestion-items">
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.4-vh6yDItcSgbu7ZO7yEZwHaHa?rs=1&pid=ImgDetMain" alt="luther">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">luther</div>
+                                    <div class="suggestion-type">Kendrick Lamar & SZA</div>
+                                </div>
+                                <div class="suggestion-meta">2:58</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.2g3IiFrJ7_DWO10yls-2pgHaHa?rs=1&pid=ImgDetMain" alt="Marvin's Room">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Marvin's Room</div>
+                                    <div class="suggestion-type">Drake</div>
+                                </div>
+                                <div class="suggestion-meta">5:47</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.qKRGvjQO1e98cjLeaMNl3QHaHa?rs=1&pid=ImgDetMain" alt="Residuals">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Residuals</div>
+                                    <div class="suggestion-type">Chris Brown</div>
+                                </div>
+                                <div class="suggestion-meta">3:35</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://th.bing.com/th/id/OIP.2YP6fWq4wVgTdPZbRc29oQAAAA?rs=1&pid=ImgDetMain" alt="Bo Gogo">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Bo Gogo</div>
+                                    <div class="suggestion-type">Kelvin Momo & Da Muziqal Chef</div>
+                                </div>
+                                <div class="suggestion-meta">8:47</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image">
+                                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/04/ab/25/04ab2585-dd7b-dfed-3afe-86800393a7c2/13ULAIM48853.rgb.jpg/592x592bb.webp" alt="Someone to Call My Lover">
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Someone to Call My Lover</div>
+                                    <div class="suggestion-type">Janet Jackson</div>
+                                </div>
+                                <div class="suggestion-meta">4:32</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="suggestions-section">
+                    <h3>Featured Playlists</h3>
+                    <div class="suggestion-items">
+                        <div class="suggestion-item">
+                            <div class="suggestion-image playlist-image blue-purple">
+                                <i data-lucide="headphones" class="playlist-icon-small"></i>
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Chill Vibes</div>
+                                    <div class="suggestion-type">Playlist</div>
+                                </div>
+                                <div class="suggestion-meta">45 songs</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image playlist-image pink-purple">
+                                <i data-lucide="dumbbell" class="playlist-icon-small"></i>
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Workout Mix</div>
+                                    <div class="suggestion-type">Playlist</div>
+                                </div>
+                                <div class="suggestion-meta">32 songs</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image playlist-image" style="background: linear-gradient(135deg, #22c55e, #3b82f6);">
+                                <i data-lucide="music" class="playlist-icon-small"></i>
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Today's Top Hits</div>
+                                    <div class="suggestion-type">Playlist</div>
+                                </div>
+                                <div class="suggestion-meta">50 songs</div>
+                            </div>
+                        </div>
+                        <div class="suggestion-item">
+                            <div class="suggestion-image playlist-image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                                <i data-lucide="radio" class="playlist-icon-small"></i>
+                            </div>
+                            <div class="suggestion-info">
+                                <div class="suggestion-main">
+                                    <div class="suggestion-name">Throwback Classics</div>
+                                    <div class="suggestion-type">Playlist</div>
+                                </div>
+                                <div class="suggestion-meta">78 songs</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter tabs with glassmorphic design -->
+        <div class="filter-tabs">
+            <div class="tabs-list">
+                <button class="tab-trigger active" data-filter="all">All</button>
+                <button class="tab-trigger" data-filter="songs">Songs</button>
+                <button class="tab-trigger" data-filter="artists">Artists</button>
+                <button class="tab-trigger" data-filter="albums">Albums</button>
+                <button class="tab-trigger" data-filter="playlists">Playlists</button>
+            </div>
+
+            <div class="filter-buttons">
+                <button class="filter-button">
+                    <i data-lucide="filter"></i>
+                    Filters
+                </button>
+                <button class="filter-button">Latest</button>
+                <button class="filter-button">Popular</button>
+            </div>
+        </div>
+
+        <!-- Search results -->
+        <div class="search-results-container">
+            <!-- Loading state -->
+            <div id="loadingState" class="loading-state hidden">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- Empty state -->
+            <div id="emptyState" class="empty-state">
+                <div class="empty-icon">
+                    <i data-lucide="search"></i>
+                </div>
+                <h3>Search for music</h3>
+                <p>Start typing to discover songs, artists, albums and playlists</p>
+            </div>
+
+            <!-- No results state -->
+            <div id="noResultsState" class="empty-state hidden">
+                <div class="empty-icon">
+                    <i data-lucide="search"></i>
+                </div>
+                <h3>No results found</h3>
+                <p>Try different keywords or check your spelling</p>
+            </div>
+
+            <!-- Results grid -->
+            <div id="searchResults" class="search-results-grid hidden">
+                <!-- Results will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <a href="/">
+                        <span>Mmino</span>
+                    </a>
+                    <p>Your ultimate music streaming experience. Discover new artists, create playlists, and enjoy your favorite tracks.</p>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                        <li><a href="/news">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Communities</h3>
+                    <ul>
+                        <li><a href="/artists">For Artists</a></li>
+                        <li><a href="/developers">Developers</a></li>
+                        <li><a href="/advertising">Advertising</a></li>
+                        <li><a href="/investors">Investors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/app">Mobile App</a></li>
+                        <li><a href="/premium">Premium</a></li>
+                        <li><a href="/student">Student Discount</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Use</a></li>
+                        <li><a href="/cookies">Cookies</a></li>
+                        <li><a href="/accessibility">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <i data-lucide="facebook"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
+                    <a href="#" aria-label="YouTube">
+                        <i data-lucide="youtube"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2025 Mmino Music. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="search.js"></script>
+</body>
+</html>

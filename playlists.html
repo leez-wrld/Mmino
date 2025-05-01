@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmino - Playlists</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Lucide Icons with defer attribute -->
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <link rel="stylesheet" href="playlists-styles.css">
+    <!-- Add preconnect for external resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://unpkg.com">
+    <!-- Add preload for critical resources -->
+    <link rel="preload" href="playlists-styles.css" as="style">
+    <link rel="preload" href="playlists.js" as="script">
+</head>
+<body>
+    <!-- Dynamic Music Notes Background -->
+    <div id="music-notes-bg"></div>
+
+    <!-- Navbar -->
+    <header class="navbar" id="dynamicNavbar">
+        <div class="container">
+            <div class="navbar-content">
+                <!-- Left navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="index.html">
+                                <i data-lucide="home"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="search.html">
+                                <i data-lucide="search"></i>
+                                <span>Browse</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+    
+                <!-- Logo - centered on all screens -->
+                <div class="logo">
+                    <a href="index.html">
+                        <span>Mmino</span>
+                    </a>
+                </div>
+
+                <!-- Right navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="playlists.html" class="active">
+                                <i data-lucide="library"></i>
+                                <span>Playlists</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#profile">
+                                <i data-lucide="user"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="container">
+                <h1 class="page-title">Playlists</h1>
+                <p class="page-description">Discover curated collections for every mood, genre, and occasion</p>
+            </div>
+        </div>
+
+        <!-- Artist Playlists (Now First) -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Artist Playlists</h2>
+                    <a href="#" class="see-all-link">See All <i data-lucide="chevron-right" class="icon-small"></i></a>
+                </div>
+                
+                <div class="scroll-container artist-playlists">
+                    <!-- Artist Playlist 1 -->
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://postersrock.com/wp-content/uploads/2020/11/19621.jpg" alt="Ariana Grande">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Ariana Grande</h3>
+                            <p class="artist-description">Ariana Grande. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artist Playlist 2 -->
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://image.kpopmap.com/2022/09/ENHYPEN-22.jpg" alt="Enhypen">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Enhypen</h3>
+                            <p class="artist-description">This is Enhypen. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artist Playlist 3 -->
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://img1.wsimg.com/isteam/ip/5afebb5e-87bb-4a7b-a230-20c0f7cae13e/sza.png" alt="SZA">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">SZA</h3>
+                            <p class="artist-description">This is SZA. The essential tracks, all in one playlist.
+                                <br></br> </p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Artist Playlist 4 -->
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://th.bing.com/th/id/OIP.TooYHflSxfxkNV9wff9-lwHaHX?rs=1&pid=ImgDetMain" alt="Drake">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Drake</h3>
+                            <p class="artist-description">This is Drake. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Additional Artist Playlists -->
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/AMCArtistImages211/v4/6f/ab/c7/6fabc764-9e20-6191-c14c-4d630ec128d5/ami-identity-fe4d7b08e8ecb40792f9c2cb12d8328e-2025-04-09T05-16-38.220Z_cropped.png/380x380cc.webp" alt="De Mthuda">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">De Mthuda</h3>
+                            <p class="artist-description">This is De Mthuda. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://urbanstreetculture.co.za/wp-content/uploads/2023/11/4357c0a0def39b7bb1abd5acb92b08ff.1000x1000x1.jpg" alt="Uncle Waffles">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Uncle Waffles</h3>
+                            <p class="artist-description">This is Uncle Waffles. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://i1.sndcdn.com/avatars-sJvFx5dyTjJ0jev4-baSjig-t500x500.jpg" alt="Billie Eilish">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Billie Eilish</h3>
+                            <p class="artist-description">This is Billie Eilish. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://thesource.com/wp-content/uploads/2025/01/bad-bunny-2024-eric-rojas-billboard-1548.webp" alt="Bad Bunny">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Bad Bunny</h3>
+                            <p class="artist-description">This is Bad Bunny. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="artist-playlist-card">
+                        <div class="artist-image">
+                            <img src="https://th.bing.com/th/id/OIP.xYowLecbgpmLdpQIElGP2gHaHa?rs=1&pid=ImgDetMain" alt="Gunna">
+                        </div>
+                        <div class="artist-info">
+                            <h3 class="artist-name">Gunna</h3>
+                            <p class="artist-description">This is Gunna. The essential tracks, all in one playlist.</p>
+                            <button class="play-button-small">
+                                <i data-lucide="play"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Block Poster -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="featured-block-poster">
+                    <div class="featured-block-overlay"></div>
+                    <div class="featured-block-background" style="background-image: url('https://dixfm.com/wp-content/uploads/2020/11/newreleases-c.png');"></div>
+                    <div class="featured-block-content">
+                        <h2 class="featured-block-title">New Music Friday</h2>
+                        <p class="featured-block-description">The best new releases of the week, handpicked for your listening pleasure.</p>
+                        <button class="featured-block-button">
+                            <i data-lucide="play"></i>
+                            <span>Listen Now</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Genre Playlists (Now Second) -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Genre Playlists</h2>
+                    <a href="#" class="see-all-link">See All <i data-lucide="chevron-right" class="icon-small"></i></a>
+                </div>
+                
+                <div class="scroll-container playlist-scroll">
+                    <!-- Genre Playlist 1 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #000000, #4b5563);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Rock Classics</h3>
+                            <p class="playlist-card-description">Timeless rock hits</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Playlist 2 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #4f46e5, #7c3aed);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Hip-Hop Hits</h3>
+                            <p class="playlist-card-description">Fresh beats and rhymes</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Playlist 3 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #0ea5e9, #2dd4bf);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Electronic Mix</h3>
+                            <p class="playlist-card-description">Synths and beats</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Playlist 4 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #854d0e, #ca8a04);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Jazz Essentials</h3>
+                            <p class="playlist-card-description">Smooth jazz classics</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Playlist 5 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #be123c, #e11d48);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Pop Hits</h3>
+                            <p class="playlist-card-description">Chart-topping songs</p>
+                        </div>
+                    </div>
+
+                    <!-- Genre Playlist 6 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #15803d, #22c55e);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Country Roads</h3>
+                            <p class="playlist-card-description">Best country music</p>
+                        </div>
+                    </div>
+
+                    <!-- Additional Genre Playlists -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #7e22ce, #c026d3);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">R&B Grooves</h3>
+                            <p class="playlist-card-description">Smooth R&B tracks</p>
+                        </div>
+                    </div>
+
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #b91c1c, #f59e0b);">
+                            <i data-lucide="music" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Latin Hits</h3>
+                            <p class="playlist-card-description">Hot Latin rhythms</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Featured Playlists -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Featured Playlists</h2>
+                    <a href="#" class="see-all-link">See All <i data-lucide="chevron-right" class="icon-small"></i></a>
+                </div>
+                
+                <div class="scroll-container featured-playlists">
+                    <!-- Featured Playlist 1 (Changed from Chill Vibes to Rap) -->
+                    <div class="featured-playlist-card">
+                        <div class="featured-playlist-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                            <i data-lucide="mic-2" class="featured-playlist-icon"></i>
+                        </div>
+                        <div class="featured-playlist-content">
+                            <h3 class="featured-playlist-title">Rap</h3>
+                            <p class="featured-playlist-description">The best rap tracks from classic to contemporary. Hard-hitting beats and powerful lyrics.</p>
+                            <div class="featured-playlist-meta">
+                                <span>45 songs</span>
+                                <span>2h 35m</span>
+                            </div>
+                            <button class="play-button">
+                                <i data-lucide="play"></i>
+                                <span>Play</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Featured Playlist 2 -->
+                    <div class="featured-playlist-card">
+                        <div class="featured-playlist-image" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                            <i data-lucide="zap" class="featured-playlist-icon"></i>
+                        </div>
+                        <div class="featured-playlist-content">
+                            <h3 class="featured-playlist-title">Today's Top Hits</h3>
+                            <p class="featured-playlist-description">The hottest tracks right now - global hits and fresh finds in one playlist.</p>
+                            <div class="featured-playlist-meta">
+                                <span>50 songs</span>
+                                <span>3h 10m</span>
+                            </div>
+                            <button class="play-button">
+                                <i data-lucide="play"></i>
+                                <span>Play</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Additional Featured Playlist -->
+                    <div class="featured-playlist-card">
+                        <div class="featured-playlist-image" style="background: linear-gradient(135deg, #15803d, #22c55e);">
+                            <i data-lucide="headphones" class="featured-playlist-icon"></i>
+                        </div>
+                        <div class="featured-playlist-content">
+                            <h3 class="featured-playlist-title">Chill Lofi Beats</h3>
+                            <p class="featured-playlist-description">Relaxing lofi hip hop beats to study, work and relax to.</p>
+                            <div class="featured-playlist-meta">
+                                <span>60 songs</span>
+                                <span>3h 45m</span>
+                            </div>
+                            <button class="play-button">
+                                <i data-lucide="play"></i>
+                                <span>Play</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="featured-playlist-card">
+                        <div class="featured-playlist-image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            <i data-lucide="flame" class="featured-playlist-icon"></i>
+                        </div>
+                        <div class="featured-playlist-content">
+                            <h3 class="featured-playlist-title">Hot Hits</h3>
+                            <p class="featured-playlist-description">The hottest tracks of the moment. Updated daily with the latest hits.</p>
+                            <div class="featured-playlist-meta">
+                                <span>50 songs</span>
+                                <span>3h 05m</span>
+                            </div>
+                            <button class="play-button">
+                                <i data-lucide="play"></i>
+                                <span>Play</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="featured-playlist-card">
+                        <div class="featured-playlist-image" style="background: linear-gradient(135deg, #0ea5e9, #6366f1);">
+                            <i data-lucide="trending-up" class="featured-playlist-icon"></i>
+                        </div>
+                        <div class="featured-playlist-content">
+                            <h3 class="featured-playlist-title">Viral Hits</h3>
+                            <p class="featured-playlist-description">Tracks going viral across social media and streaming platforms right now.</p>
+                            <div class="featured-playlist-meta">
+                                <span>40 songs</span>
+                                <span>2h 30m</span>
+                            </div>
+                            <button class="play-button">
+                                <i data-lucide="play"></i>
+                                <span>Play</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mood Playlists -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Mood Playlists</h2>
+                    <a href="#" class="see-all-link">See All <i data-lucide="chevron-right" class="icon-small"></i></a>
+                </div>
+                
+                <div class="scroll-container playlist-scroll">
+                    <!-- Mood Playlist 1 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                            <i data-lucide="headphones" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Chill Vibes</h3>
+                            <p class="playlist-card-description">Perfect for relaxing</p>
+                        </div>
+                    </div>
+
+                    <!-- Mood Playlist 2 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                            <i data-lucide="dumbbell" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Workout Mix</h3>
+                            <p class="playlist-card-description">High energy tracks</p>
+                        </div>
+                    </div>
+
+                    <!-- Mood Playlist 3 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            <i data-lucide="party-popper" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Party Anthems</h3>
+                            <p class="playlist-card-description">Get the party started</p>
+                        </div>
+                    </div>
+
+                    <!-- Mood Playlist 4 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #10b981, #3b82f6);">
+                            <i data-lucide="coffee" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Morning Coffee</h3>
+                            <p class="playlist-card-description">Start your day right</p>
+                        </div>
+                    </div>
+
+                    <!-- Mood Playlist 5 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                            <i data-lucide="moon" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Sleep Sounds</h3>
+                            <p class="playlist-card-description">Peaceful night's rest</p>
+                        </div>
+                    </div>
+
+                    <!-- Mood Playlist 6 -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #6366f1, #2dd4bf);">
+                            <i data-lucide="brain" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Focus Flow</h3>
+                            <p class="playlist-card-description">Concentration enhancing</p>
+                        </div>
+                    </div>
+
+                    <!-- Additional Mood Playlists -->
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #be123c, #fb7185);">
+                            <i data-lucide="heart" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Love Songs</h3>
+                            <p class="playlist-card-description">Romantic melodies</p>
+                        </div>
+                    </div>
+
+                    <div class="playlist-card">
+                        <div class="playlist-card-image" style="background: linear-gradient(135deg, #0284c7, #0ea5e9);">
+                            <i data-lucide="cloud-rain" class="playlist-card-icon"></i>
+                        </div>
+                        <div class="playlist-card-content">
+                            <h3 class="playlist-card-title">Rainy Day</h3>
+                            <p class="playlist-card-description">Perfect for rainy days</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curated Collections -->
+        <section class="playlist-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Curated Collections</h2>
+                    <a href="#" class="see-all-link">See All <i data-lucide="chevron-right" class="icon-small"></i></a>
+                </div>
+                
+                <div class="scroll-container curated-collections">
+                    <!-- Curated Collection 1 -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #3b82f6, #8b5cf6);">
+                            <i data-lucide="trending-up" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Charts</h3>
+                    </div>
+
+                    <!-- Curated Collection 2 -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #ec4899, #8b5cf6);">
+                            <i data-lucide="calendar" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">New Releases</h3>
+                    </div>
+
+                    <!-- Curated Collection 3 -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #f59e0b, #ef4444);">
+                            <i data-lucide="radio" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Radio</h3>
+                    </div>
+
+                    <!-- Curated Collection 4 -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #10b981, #3b82f6);">
+                            <i data-lucide="mic-2" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Live Performances</h3>
+                    </div>
+
+                    <!-- Curated Collection 5 -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);">
+                            <i data-lucide="globe" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Discover</h3>
+                    </div>
+
+                    <!-- Additional Collections -->
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #15803d, #22c55e);">
+                            <i data-lucide="award" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Grammy Winners</h3>
+                    </div>
+
+                    <div class="collection-card">
+                        <div class="collection-image" style="background: linear-gradient(135deg, #0f172a, #334155);">
+                            <i data-lucide="history" class="collection-icon"></i>
+                        </div>
+                        <h3 class="collection-title">Throwbacks</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-logo">
+                    <a href="/">
+                        <span>Mmino</span>
+                    </a>
+                    <p>Your ultimate music streaming experience. Discover new artists, create playlists, and enjoy your favorite tracks.</p>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/careers">Careers</a></li>
+                        <li><a href="/press">Press</a></li>
+                        <li><a href="/news">News</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Communities</h3>
+                    <ul>
+                        <li><a href="/artists">For Artists</a></li>
+                        <li><a href="/developers">Developers</a></li>
+                        <li><a href="/advertising">Advertising</a></li>
+                        <li><a href="/investors">Investors</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Useful Links</h3>
+                    <ul>
+                        <li><a href="/support">Support</a></li>
+                        <li><a href="/app">Mobile App</a></li>
+                        <li><a href="/premium">Premium</a></li>
+                        <li><a href="/student">Student Discount</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/privacy">Privacy Policy</a></li>
+                        <li><a href="/terms">Terms of Use</a></li>
+                        <li><a href="/cookies">Cookies</a></li>
+                        <li><a href="/accessibility">Accessibility</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <i data-lucide="facebook"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
+                    <a href="#" aria-label="YouTube">
+                        <i data-lucide="youtube"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2025 Mmino Music. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="playlists.js" defer></script>
+</body>
+</html>
