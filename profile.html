@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mmino - Your Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        /* Base styles */
+        :root {
+            --primary: #9333ea;
+            --primary-hover: #7e22ce;
+            --secondary: #1f2937;
+            --text: #ffffff;
+            --text-muted: #9ca3af;
+            --background: #0f0f13;
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --border: rgba(255, 255, 255, 0.1);
+            --radius: 0.75rem;
+            --transition-slow: 0.5s;
+            --transition-medium: 0.3s;
+            --transition-fast: 0.15s;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+            --neuro-light: rgba(255, 255, 255, 0.05);
+            --neuro-dark: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            background: none;
+            font-family: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Dynamic Background */
+        #music-notes-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .music-note {
+            position: absolute;
+            opacity: 0;
+            color: rgba(255, 255, 255, 0.2);
+            animation: floatUp 15s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) rotate(0deg) scale(0.5);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Navbar*/
+        .navbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: linear-gradient(to right, rgba(147, 51, 234, 0.3), rgba(225, 29, 72, 0.3));
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            transition: background 1s ease-in-out;
+        }
+
+        .navbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 4rem;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, #e11d48, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                gap: 2rem;
+            }
+        }
+
+        .nav-links a, .profile-link a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .nav-links a span {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links a span {
+                display: inline;
+            }
+        }
+
+        .nav-links a::after, .profile-link a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, #e11d48, #9333ea);
+            transition: width var(--transition-medium);
+        }
+
+        .nav-links a:hover::after, .profile-link a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover, .profile-link a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-medium), visibility var(--transition-medium);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            width: 90%;
+            max-width: 500px;
+            background-color: var(--card-bg);
+            backdrop-filter: blur(30px);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: 
+                10px 10px 30px var(--neuro-dark),
+                -10px -10px 30px var(--neuro-light),
+                inset 1px 1px 1px rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(20px);
+            transition: transform var(--transition-medium);
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at center, rgba(147, 51, 234, 0.1), transparent 70%);
+            opacity: 0.5;
+            animation: rotate 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .modal-title {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .modal-subtitle {
+            color: var(--text-muted);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            color: var(--text-muted);
+            transition: all var(--transition-fast);
+            width: 2rem;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .close-modal:hover {
+            color: var(--text);
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: rotate(90deg);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            transition: all var(--transition-fast);
+            box-shadow: 
+                inset 2px 2px 5px var(--neuro-dark),
+                inset -2px -2px 5px var(--neuro-light);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 
+                0 0 0 2px rgba(147, 51, 234, 0.3),
+                inset 2px 2px 5px var(--neuro-dark),
+                inset -2px -2px 5px var(--neuro-light);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .form-error {
+            color: #ef4444;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        .form-error.active {
+            display: block;
+        }
+
+        .form-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 2rem;
+        }
+
+        .form-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .form-text a {
+            color: var(--primary);
+            transition: all var(--transition-fast);
+        }
+
+        .form-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            transition: all var(--transition-medium);
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .btn {
+                padding: 0.625rem 1.25rem;
+                font-size: 0.875rem;
+            }
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s;
+        }
+
+        .btn:active::before {
+            left: 100%;
+        }
+
+        @media (min-width: 769px) {
+            .btn:hover::before {
+                left: 100%;
+            }
+        }
+
+        .primary-btn {
+            background: linear-gradient(to right, #e11d48, #db2777);
+            color: white;
+            box-shadow: 
+                5px 5px 10px var(--neuro-dark),
+                -5px -5px 10px var(--neuro-light),
+                0 0 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .primary-btn:active {
+            background: linear-gradient(to right, #be123c, #be185d);
+            transform: translateY(-3px);
+            box-shadow: 
+                8px 8px 15px var(--neuro-dark),
+                -8px -8px 15px var(--neuro-light),
+                0 0 20px rgba(225, 29, 72, 0.5);
+        }
+
+        @media (min-width: 769px) {
+            .primary-btn:hover {
+                background: linear-gradient(to right, #be123c, #be185d);
+                transform: translateY(-3px);
+                box-shadow: 
+                    8px 8px 15px var(--neuro-dark),
+                    -8px -8px 15px var(--neuro-light),
+                    0 0 20px rgba(225, 29, 72, 0.5);
+            }
+        }
+
+        .outline-btn {
+            border: 1px solid #e11d48;
+            color: #f472b6;
+            box-shadow: 
+                5px 5px 10px var(--neuro-dark),
+                -5px -5px 10px var(--neuro-light);
+        }
+
+        .outline-btn:active {
+            background-color: rgba(225, 29, 72, 0.1);
+            transform: translateY(-3px);
+            box-shadow: 
+                8px 8px 15px var(--neuro-dark),
+                -8px -8px 15px var(--neuro-light),
+                0 0 15px rgba(225, 29, 72, 0.3);
+        }
+
+        @media (min-width: 769px) {
+            .outline-btn:hover {
+                background-color: rgba(225, 29, 72, 0.1);
+                transform: translateY(-3px);
+                box-shadow: 
+                    8px 8px 15px var(--neuro-dark),
+                    -8px -8px 15px var(--neuro-light),
+                    0 0 15px rgba(225, 29, 72, 0.3);
+            }
+        }
+
+        /* Profile Page Styles */
+        .profile-page {
+            padding: 3rem 0;
+            display: none;
+        }
+
+        .profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .profile-header {
+                flex-direction: row;
+                text-align: left;
+                align-items: flex-start;
+                gap: 2rem;
+            }
+        }
+
+        .profile-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(225, 29, 72, 0.3);
+            box-shadow: 
+                10px 10px 20px var(--neuro-dark),
+                -10px -10px 20px var(--neuro-light),
+                0 0 20px rgba(225, 29, 72, 0.3);
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .profile-avatar {
+                margin-bottom: 0;
+            }
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .edit-avatar {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(to right, #e11d48, #db2777);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transition: all var(--transition-fast);
+        }
+
+        .edit-avatar:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(to right, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-username {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .profile-stats {
+                justify-content: flex-start;
+            }
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        .profile-bio {
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            max-width: 36rem;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        @media (min-width: 768px) {
+            .profile-actions {
+                justify-content: flex-start;
+            }
+        }
+
+        /* Profile Content Sections */
+        .profile-section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, #e0e0e0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .view-all {
+            font-size: 0.875rem;
+            color: #e11d48;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+
+        .view-all::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: linear-gradient(to right, #e11d48, #9333ea);
+            transition: width var(--transition-medium);
+        }
+
+        .view-all:hover::after {
+            width: 100%;
+        }
+
+        .view-all:hover {
+            color: #f472b6;
+            transform: translateX(3px);
+        }
+
+        /* Playlists Grid */
+        .playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .playlists-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .playlists-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        .playlist-card {
+            position: relative;
+            aspect-ratio: 1/1;
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: all var(--transition-medium);
+            box-shadow: 
+                5px 5px 15px var(--neuro-dark),
+                -5px -5px 15px var(--neuro-light);
+        }
+
+        .playlist-card:hover {
+            transform: translateY(-0.5rem) scale(1.02);
+            box-shadow: 
+                8px 8px 20px var(--neuro-dark),
+                -8px -8px 20px var(--neuro-light),
+                0 0 15px rgba(225, 29, 72, 0.3);
+        }
+
+        .playlist-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 3rem;
+            height: 3rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-medium);
+        }
+
+        .playlist-card:hover .playlist-icon {
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .playlist-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem;
+            transform: translateY(0);
+            transition: transform var(--transition-medium);
+        }
+
+        .playlist-card:hover .playlist-info {
+            transform: translateY(-5px);
+        }
+
+        .playlist-info h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* Color gradients for playlists */
+        .blue-purple {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+        }
+
+        .pink-purple {
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
+        }
+
+        .indigo-blue {
+            background: linear-gradient(135deg, #6366f1, #3b82f6);
+        }
+
+        .orange-red {
+            background: linear-gradient(135deg, #f97316, #ef4444);
+        }
+
+        /* Recent Tracks */
+        .tracks-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .track-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            transition: all var(--transition-medium);
+            border: 1px solid var(--border);
+        }
+
+        .track-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                5px 5px 15px var(--neuro-dark),
+                -5px -5px 15px var(--neuro-light);
+        }
+
+        .track-cover {
+            width: 60px;
+            height: 60px;
+            border-radius: 0.25rem;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .track-cover img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .track-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .track-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-artist {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .track-action {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+            transition: all var(--transition-fast);
+        }
+
+        .track-action:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transform: translateY(-2px);
+        }
+
+        /* Settings Section */
+        .settings-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 768px) {
+            .settings-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .setting-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all var(--transition-medium);
+        }
+
+        .setting-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                5px 5px 15px var(--neuro-dark),
+                -5px -5px 15px var(--neuro-light);
+        }
+
+        .setting-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .setting-icon {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(225, 29, 72, 0.2));
+            color: var(--text);
+        }
+
+        .setting-title {
+            font-weight: 600;
+            font-size: 1.125rem;
+        }
+
+        .setting-description {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(15, 15, 19, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (min-width: 768px) {
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .social-links a {
+            color: var(--text-muted);
+            transition: all var(--transition-medium);
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                3px 3px 8px var(--neuro-dark),
+                -3px -3px 8px var(--neuro-light);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s;
+        }
+
+        .social-links a:hover::before {
+            left: 100%;
+        }
+
+        .social-links a:hover {
+            color: white;
+            transform: translateY(-3px);
+            background-color: rgba(255, 255, 255, 0.1);
+            box-shadow: 
+                5px 5px 10px var(--neuro-dark),
+                -5px -5px 10px var(--neuro-light),
+                0 0 10px rgba(225, 29, 72, 0.3);
+        }
+
+        .copyright {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(to right, #e11d48, #9333ea);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+/* Profile Picture Edit */
+.profile-picture-edit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+@media (min-width: 768px) {
+    .profile-picture-edit {
+        flex-direction: row;
+        align-items: center;
+    }
+}
+
+.profile-picture-edit img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+}
+
+.profile-picture-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+@media (min-width: 768px) {
+    .profile-picture-actions {
+        width: auto;
+    }
+}
+
+/* Share Options */
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.share-option {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius);
+    transition: all var(--transition-medium);
+    border: 1px solid var(--border);
+}
+
+.share-option:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-3px);
+    box-shadow: 
+        5px 5px 10px var(--neuro-dark),
+        -5px -5px 10px var(--neuro-light);
+}
+
+.share-option span {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.share-link-container {
+    margin-top: 1rem;
+}
+
+.share-link-input {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.share-link-input .form-input {
+    flex: 1;
+}
+
+/* Empty States */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    text-align: center;
+}
+
+.empty-state-icon {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.1), rgba(225, 29, 72, 0.1));
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    color: var(--text-muted);
+}
+
+.empty-state-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-description {
+    color: var(--text-muted);
+    max-width: 24rem;
+    margin: 0 auto 1.5rem;
+}
+
+/* Textarea styles */
+textarea.form-input {
+    min-height: 100px;
+    resize: vertical;
+}
+    </style>
+</head>
+<body>
+    <!-- Dynamic Music Notes Background -->
+    <div id="music-notes-bg"></div>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <!-- Left navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="index.html">
+                                <i data-lucide="home"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="search.html">
+                                <i data-lucide="search"></i>
+                                <span>Browse</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+    
+                <!-- Logo -->
+                <div class="logo">
+                    <a href="index.html">
+                        <span>Mmino</span>
+                    </a>
+                </div>
+
+                <!-- Right navigation -->
+                <nav>
+                    <ul class="nav-links">
+                        <li>
+                            <a href="playlists.html">
+                                <i data-lucide="library"></i>
+                                <span>Playlists</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" id="profileLink">
+                                <i data-lucide="user"></i>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sign Up Modal -->
+    <div class="modal-overlay" id="signupModal">
+        <div class="modal">
+            <button class="close-modal" id="closeSignupModal">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-header">
+                <h2 class="modal-title">Create Your Account</h2>
+                <p class="modal-subtitle">Join Mmino to discover and share music</p>
+            </div>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
+                    <div class="form-error" id="fullNameError">Please enter your full name</div>
+                </div>
+                <div class="form-group">
+                    <label for="username" class="form-label">Username</label>
+                    <input type="text" id="username" class="form-input" placeholder="Choose a username" required>
+                    <div class="form-error" id="usernameError">Username must be at least 3 characters</div>
+                </div>
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+                    <div class="form-error" id="emailError">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" class="form-input" placeholder="Create a password" required>
+                    <div class="form-error" id="passwordError">Password must be at least 8 characters</div>
+                </div>
+                <div class="form-footer">
+                    <p class="form-text">Already have an account? <a href="#" id="loginLink">Log in</a></p>
+                    <button type="submit" class="btn primary-btn">Sign Up</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="close-modal" id="closeLoginModal">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-header">
+                <h2 class="modal-title">Welcome Back</h2>
+                <p class="modal-subtitle">Log in to continue your music journey</p>
+            </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail" class="form-label">Email</label>
+                    <input type="email" id="loginEmail" class="form-input" placeholder="Enter your email" required>
+                    <div class="form-error" id="loginEmailError">Please enter a valid email address</div>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" id="loginPassword" class="form-input" placeholder="Enter your password" required>
+                    <div class="form-error" id="loginPasswordError">Please enter your password</div>
+                </div>
+                <div class="form-footer">
+                    <p class="form-text">Don't have an account? <a href="#" id="signupLink">Sign up</a></p>
+                    <button type="submit" class="btn primary-btn">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div class="modal-overlay" id="editProfileModal">
+        <div class="modal">
+            <button class="close-modal" id="closeEditProfileModal">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Your Profile</h2>
+                <p class="modal-subtitle">Update your profile information</p>
+            </div>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="editFullName" class="form-label">Full Name</label>
+                    <input type="text" id="editFullName" class="form-input" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUsername" class="form-label">Username</label>
+                    <input type="text" id="editUsername" class="form-input" placeholder="Choose a username" required>
+                </div>
+                <div class="form-group">
+                    <label for="editBio" class="form-label">Bio</label>
+                    <textarea id="editBio" class="form-input" rows="3" placeholder="Tell the world about your music taste"></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Profile Picture</label>
+                    <div class="profile-picture-edit">
+                        <img src="/placeholder.svg?height=100&width=100" alt="Profile Picture" id="previewProfilePic">
+                        <div class="profile-picture-actions">
+                            <button type="button" class="btn outline-btn" id="uploadPhotoBtn">
+                                <i data-lucide="upload" size="18"></i>
+                                Upload Photo
+                            </button>
+                            <input type="file" id="profilePicInput" accept="image/*" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="button" class="btn outline-btn" id="cancelEditProfile">Cancel</button>
+                    <button type="submit" class="btn primary-btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Share Profile Modal -->
+    <div class="modal-overlay" id="shareProfileModal">
+        <div class="modal">
+            <button class="close-modal" id="closeShareModal">
+                <i data-lucide="x"></i>
+            </button>
+            <div class="modal-header">
+                <h2 class="modal-title">Share Your Profile</h2>
+                <p class="modal-subtitle">Let others discover your music taste</p>
+            </div>
+            <div class="share-options">
+                <button class="share-option">
+                    <i data-lucide="facebook" size="24"></i>
+                    <span>Facebook</span>
+                </button>
+                <button class="share-option">
+                    <i data-lucide="twitter" size="24"></i>
+                    <span>Twitter</span>
+                </button>
+                <button class="share-option">
+                    <i data-lucide="instagram" size="24"></i>
+                    <span>Instagram</span>
+                </button>
+                <button class="share-option">
+                    <i data-lucide="mail" size="24"></i>
+                    <span>Email</span>
+                </button>
+            </div>
+            <div class="share-link-container">
+                <p class="form-label">Profile Link</p>
+                <div class="share-link-input">
+                    <input type="text" class="form-input" id="profileShareLink" value="https://mmino.com/profile/username" readonly>
+                    <button class="btn outline-btn" id="copyLinkBtn">
+                        <i data-lucide="copy" size="18"></i>
+                        Copy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Page Content -->
+    <main class="container profile-page" id="profilePage">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="/placeholder.svg?height=150&width=150" alt="Profile Avatar" id="profileAvatar">
+                <button class="edit-avatar" id="editAvatar">
+                    <i data-lucide="pencil"></i>
+                </button>
+            </div>
+            <div class="profile-info">
+                <h1 class="profile-name" id="profileName">Your Name</h1>
+                <p class="profile-username" id="profileUsername">@username</p>
+                <div class="profile-stats">
+                    <div class="stat">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Playlists</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Followers</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value">0</div>
+                        <div class="stat-label">Following</div>
+                    </div>
+                </div>
+                <p class="profile-bio" id="profileBio">No bio yet. Tell the world about your music taste!</p>
+                <div class="profile-actions">
+                    <button class="btn primary-btn" id="editProfileBtn">
+                        <i data-lucide="edit-3" size="18"></i>
+                        Edit Profile
+                    </button>
+                    <button class="btn outline-btn" id="shareProfileBtn">
+                        <i data-lucide="share-2" size="18"></i>
+                        Share Profile
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Your Playlists Section -->
+        <section class="profile-section">
+            <div class="section-header">
+                <h2 class="section-title">Your Playlists</h2>
+                <a href="#" class="view-all">View All</a>
+            </div>
+            <div id="playlistsContainer">
+                <!-- Empty state for playlists -->
+                <div class="empty-state" id="emptyPlaylists">
+                    <div class="empty-state-icon">
+                        <i data-lucide="music" size="32"></i>
+                    </div>
+                    <h3 class="empty-state-title">No Playlists Yet</h3>
+                    <p class="empty-state-description">Create your first playlist to organize your favorite tracks and share them with friends.</p>
+                    <button class="btn primary-btn">
+                        <i data-lucide="plus" size="18"></i>
+                        Create Playlist
+                    </button>
+                </div>
+                
+                <!-- Playlist grid-->
+                <div class="playlists-grid" id="playlistsGrid" style="display: none;">
+                    <a href="#" class="playlist-card blue-purple">
+                        <div class="playlist-icon">
+                            <i data-lucide="headphones" size="24" color="white"></i>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Chill Vibes</h3>
+                        </div>
+                    </a>
+                    <a href="#" class="playlist-card pink-purple">
+                        <div class="playlist-icon">
+                            <i data-lucide="heart" size="24" color="white"></i>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Favorites</h3>
+                        </div>
+                    </a>
+                    <a href="#" class="playlist-card indigo-blue">
+                        <div class="playlist-icon">
+                            <i data-lucide="zap" size="24" color="white"></i>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>Workout Mix</h3>
+                        </div>
+                    </a>
+                    <a href="#" class="playlist-card orange-red">
+                        <div class="playlist-icon">
+                            <i data-lucide="music" size="24" color="white"></i>
+                        </div>
+                        <div class="playlist-info">
+                            <h3>New Discoveries</h3>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recently Played Section -->
+        <section class="profile-section">
+            <div class="section-header">
+                <h2 class="section-title">Recently Played</h2>
+                <a href="#" class="view-all">View History</a>
+            </div>
+            <div id="recentlyPlayedContainer">
+                <!-- Empty state for recently played -->
+                <div class="empty-state" id="emptyRecentlyPlayed">
+                    <div class="empty-state-icon">
+                        <i data-lucide="history" size="32"></i>
+                    </div>
+                    <h3 class="empty-state-title">No Recently Played Tracks</h3>
+                    <p class="empty-state-description">Start listening to music and your recently played tracks will appear here.</p>
+                    <a href="discover.html" class="btn primary-btn">
+                        <i data-lucide="play" size="18"></i>
+                        Discover Music
+                    </a>
+                </div>
+                
+                <!-- Tracks list -->
+                <div class="tracks-list" id="recentlyPlayedList" style="display: none;">
+                    <div class="track-item">
+                        <div class="track-cover">
+                            <img src="/placeholder.svg?height=60&width=60" alt="Blinding Lights">
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Blinding Lights</h3>
+                            <p class="track-artist">The Weeknd</p>
+                        </div>
+                        <div class="track-actions">
+                            <button class="track-action">
+                                <i data-lucide="heart" size="18"></i>
+                            </button>
+                            <button class="track-action">
+                                <i data-lucide="plus" size="18"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="track-item">
+                        <div class="track-cover">
+                            <img src="/placeholder.svg?height=60&width=60" alt="Levitating">
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Levitating</h3>
+                            <p class="track-artist">Dua Lipa</p>
+                        </div>
+                        <div class="track-actions">
+                            <button class="track-action">
+                                <i data-lucide="heart" size="18"></i>
+                            </button>
+                            <button class="track-action">
+                                <i data-lucide="plus" size="18"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="track-item">
+                        <div class="track-cover">
+                            <img src="/placeholder.svg?height=60&width=60" alt="Nokia">
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Nokia</h3>
+                            <p class="track-artist">Drake</p>
+                        </div>
+                        <div class="track-actions">
+                            <button class="track-action">
+                                <i data-lucide="heart" size="18"></i>
+                            </button>
+                            <button class="track-action">
+                                <i data-lucide="plus" size="18"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Settings Section -->
+        <section class="profile-section">
+            <div class="section-header">
+                <h2 class="section-title">Account Settings</h2>
+            </div>
+            <div class="settings-grid">
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">
+                            <i data-lucide="bell" size="20"></i>
+                        </div>
+                        <h3 class="setting-title">Notifications</h3>
+                    </div>
+                    <p class="setting-description">Manage your notification preferences</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">
+                            <i data-lucide="shield" size="20"></i>
+                        </div>
+                        <h3 class="setting-title">Privacy</h3>
+                    </div>
+                    <p class="setting-description">Control who can see your activity</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">
+                            <i data-lucide="headphones" size="20"></i>
+                        </div>
+                        <h3 class="setting-title">Audio Quality</h3>
+                    </div>
+                    <p class="setting-description">Set your preferred streaming quality</p>
+                    <select class="form-input">
+                        <option>High (320 kbps)</option>
+                        <option>Medium (160 kbps)</option>
+                        <option>Low (96 kbps)</option>
+                        <option>Auto (Adjusts based on connection)</option>
+                    </select>
+                </div>
+                <div class="setting-card">
+                    <div class="setting-header">
+                        <div class="setting-icon">
+                            <i data-lucide="log-out" size="20"></i>
+                        </div>
+                        <h3 class="setting-title">Sign Out</h3>
+                    </div>
+                    <p class="setting-description">Log out of your account</p>
+                    <button class="btn outline-btn" id="logoutBtn">Sign Out</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook">
+                        <i data-lucide="facebook"></i>
+                    </a>
+                    <a href="#" aria-label="Twitter">
+                        <i data-lucide="twitter"></i>
+                    </a>
+                    <a href="#" aria-label="Instagram">
+                        <i data-lucide="instagram"></i>
+                    </a>
+                    <a href="#" aria-label="YouTube">
+                        <i data-lucide="youtube"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2025 Mmino Music. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        
+        lucide.createIcons();
+        
+     
+        createMusicNotesBackground();
+        
+       
+        const profileLink = document.getElementById('profileLink');
+        const signupModal = document.getElementById('signupModal');
+        const loginModal = document.getElementById('loginModal');
+        const editProfileModal = document.getElementById('editProfileModal');
+        const shareProfileModal = document.getElementById('shareProfileModal');
+        const closeSignupModal = document.getElementById('closeSignupModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeEditProfileModal = document.getElementById('closeEditProfileModal');
+        const closeShareModal = document.getElementById('closeShareModal');
+        const signupLink = document.getElementById('signupLink');
+        const loginLink = document.getElementById('loginLink');
+        const signupForm = document.getElementById('signupForm');
+        const loginForm = document.getElementById('loginForm');
+        const editProfileForm = document.getElementById('editProfileForm');
+        const profilePage = document.getElementById('profilePage');
+        const editProfileBtn = document.getElementById('editProfileBtn');
+        const cancelEditProfile = document.getElementById('cancelEditProfile');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const uploadPhotoBtn = document.getElementById('uploadPhotoBtn');
+        const profilePicInput = document.getElementById('profilePicInput');
+        const previewProfilePic = document.getElementById('previewProfilePic');
+        const copyLinkBtn = document.getElementById('copyLinkBtn');
+        const shareProfileBtn = document.getElementById('shareProfileBtn');
+        
+        
+        const isLoggedIn = localStorage.getItem('mmino_user');
+        
+        
+        profileLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            if (isLoggedIn) {
+                
+                profilePage.style.display = 'block';
+                loadUserProfile();
+            } else {
+                
+                signupModal.classList.add('active');
+            }
+        });
+        
+        
+        closeSignupModal.addEventListener('click', () => {
+            signupModal.classList.remove('active');
+        });
+        
+        closeLoginModal.addEventListener('click', () => {
+            loginModal.classList.remove('active');
+        });
+        
+        closeEditProfileModal.addEventListener('click', () => {
+            editProfileModal.classList.remove('active');
+        });
+        
+        closeShareModal.addEventListener('click', () => {
+            shareProfileModal.classList.remove('active');
+        });
+        
+        
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            signupModal.classList.add('active');
+        });
+        
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signupModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+        
+        
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            
+            const fullName = document.getElementById('fullName').value;
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            
+            let isValid = true;
+            
+            if (fullName.trim() === '') {
+                document.getElementById('fullNameError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('fullNameError').classList.remove('active');
+            }
+            
+            if (username.trim().length < 3) {
+                document.getElementById('usernameError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('usernameError').classList.remove('active');
+            }
+            
+            if (!isValidEmail(email)) {
+                document.getElementById('emailError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('emailError').classList.remove('active');
+            }
+            
+            if (password.length < 8) {
+                document.getElementById('passwordError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('passwordError').classList.remove('active');
+            }
+            
+            if (isValid) {
+                
+                const user = {
+                    fullName,
+                    username,
+                    email,
+                    password,
+                    playlists: 0,
+                    followers: 0,
+                    following: 0,
+                    bio: 'No bio yet. Tell the world about your music taste!',
+                    profilePic: '/placeholder.svg?height=150&width=150',
+                    hasPlaylists: false,
+                    hasRecentlyPlayed: false
+                };
+                
+                
+                localStorage.setItem('mmino_user', JSON.stringify(user));
+                
+                
+                signupModal.classList.remove('active');
+                
+                
+                profilePage.style.display = 'block';
+                
+                
+                loadUserProfile();
+            }
+        });
+        
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            
+            let isValid = true;
+            
+            if (!isValidEmail(email)) {
+                document.getElementById('loginEmailError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('loginEmailError').classList.remove('active');
+            }
+            
+            if (password.trim() === '') {
+                document.getElementById('loginPasswordError').classList.add('active');
+                isValid = false;
+            } else {
+                document.getElementById('loginPasswordError').classList.remove('active');
+            }
+            
+            if (isValid) {
+                
+                const storedUser = localStorage.getItem('mmino_user');
+                
+                if (storedUser) {
+                    
+                    loginModal.classList.remove('active');
+                    
+                    
+                    profilePage.style.display = 'block';
+                    
+                    
+                    loadUserProfile();
+                } else {
+                    alert('No account found. Please sign up first.');
+                }
+            }
+        });
+        
+        
+        editProfileBtn.addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('mmino_user'));
+            
+            if (user) {
+                
+                document.getElementById('editFullName').value = user.fullName;
+                document.getElementById('editUsername').value = user.username;
+                document.getElementById('editBio').value = user.bio;
+                document.getElementById('previewProfilePic').src = user.profilePic || '/placeholder.svg?height=100&width=100';
+                
+                
+                editProfileModal.classList.add('active');
+            }
+        });
+        
+        
+        cancelEditProfile.addEventListener('click', () => {
+            editProfileModal.classList.remove('active');
+        });
+        
+        
+        editProfileForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const user = JSON.parse(localStorage.getItem('mmino_user'));
+            
+            if (user) {
+                
+                user.fullName = document.getElementById('editFullName').value;
+                user.username = document.getElementById('editUsername').value;
+                user.bio = document.getElementById('editBio').value;
+                user.profilePic = document.getElementById('previewProfilePic').src;
+                
+                
+                localStorage.setItem('mmino_user', JSON.stringify(user));
+                
+                
+                editProfileModal.classList.remove('active');
+                
+                
+                loadUserProfile();
+            }
+        });
+        
+       
+        uploadPhotoBtn.addEventListener('click', () => {
+            profilePicInput.click();
+        });
+        
+        
+        profilePicInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                
+                reader.onload = (event) => {
+                    previewProfilePic.src = event.target.result;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        
+        document.getElementById('shareProfileBtn').addEventListener('click', () => {
+            const user = JSON.parse(localStorage.getItem('mmino_user'));
+            
+            if (user) {
+                
+                document.getElementById('profileShareLink').value = `https://mmino.com/profile/${user.username}`;
+                
+                
+                shareProfileModal.classList.add('active');
+            }
+        });
+        
+        
+        copyLinkBtn.addEventListener('click', () => {
+            const profileShareLink = document.getElementById('profileShareLink');
+            
+            
+            profileShareLink.select();
+            profileShareLink.setSelectionRange(0, 99999); // For mobile devices
+            
+            
+            document.execCommand('copy');
+            
+            
+            const originalText = copyLinkBtn.innerHTML;
+            copyLinkBtn.innerHTML = '<i data-lucide="check" size="18"></i> Copied!';
+            lucide.createIcons();
+            
+            
+            setTimeout(() => {
+                copyLinkBtn.innerHTML = originalText;
+                lucide.createIcons();
+            }, 2000);
+        });
+        
+       
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('mmino_user');
+            profilePage.style.display = 'none';
+            window.location.href = 'index.html';
+        });
+        
+        
+        function loadUserProfile() {
+            const user = JSON.parse(localStorage.getItem('mmino_user'));
+            
+            if (user) {
+                
+                document.getElementById('profileName').textContent = user.fullName;
+                document.getElementById('profileUsername').textContent = '@' + user.username;
+                document.getElementById('profileBio').textContent = user.bio;
+                document.getElementById('profileAvatar').src = user.profilePic || '/placeholder.svg?height=150&width=150';
+                
+                
+                const stats = document.querySelectorAll('.stat-value');
+                stats[0].textContent = user.playlists;
+                stats[1].textContent = user.followers;
+                stats[2].textContent = user.following;
+                
+                
+                document.getElementById('profileShareLink').value = `https://mmino.com/profile/${user.username}`;
+                
+               
+                const emptyPlaylists = document.getElementById('emptyPlaylists');
+                const playlistsGrid = document.getElementById('playlistsGrid');
+                
+                if (user.hasPlaylists) {
+                    emptyPlaylists.style.display = 'none';
+                    playlistsGrid.style.display = 'grid';
+                } else {
+                    emptyPlaylists.style.display = 'flex';
+                    playlistsGrid.style.display = 'none';
+                }
+                
+                
+                const emptyRecentlyPlayed = document.getElementById('emptyRecentlyPlayed');
+                const recentlyPlayedList = document.getElementById('recentlyPlayedList');
+                
+                if (user.hasRecentlyPlayed) {
+                    emptyRecentlyPlayed.style.display = 'none';
+                    recentlyPlayedList.style.display = 'flex';
+                } else {
+                    emptyRecentlyPlayed.style.display = 'flex';
+                    recentlyPlayedList.style.display = 'none';
+                }
+            }
+        }
+        
+        
+        if (isLoggedIn) {
+            profilePage.style.display = 'block';
+            loadUserProfile();
+        }
+        
+        
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+        
+        
+        function createMusicNotesBackground() {
+            const musicNotesBg = document.getElementById('music-notes-bg');
+            const musicNotes = ['♪', '♫', '♬', '♭', '♮', '♯'];
+            
+            for (let i = 0; i < 50; i++) {
+                const note = document.createElement('div');
+                note.className = 'music-note';
+                note.textContent = musicNotes[Math.floor(Math.random() * musicNotes.length)];
+                
+                const size = Math.random() * 20 + 10;
+                note.style.fontSize = `${size}px`;
+                
+                const posX = Math.random() * 100;
+                note.style.left = `${posX}%`;
+                
+                const delay = Math.random() * 10;
+                note.style.animationDelay = `${delay}s`;
+                
+                musicNotesBg.appendChild(note);
+            }
+        }
+        
+       
+        document.getElementById('editAvatar').addEventListener('click', () => {
+           
+            const user = JSON.parse(localStorage.getItem('mmino_user'));
+            
+            if (user) {
+                
+                document.getElementById('editFullName').value = user.fullName;
+                document.getElementById('editUsername').value = user.username;
+                document.getElementById('editBio').value = user.bio;
+                document.getElementById('previewProfilePic').src = user.profilePic || '/placeholder.svg?height=100&width=100';
+                
+               
+                editProfileModal.classList.add('active');
+            }
+        });
+        
+        
+        const shareOptions = document.querySelectorAll('.share-option');
+        shareOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                alert(`Sharing via ${option.querySelector('span').textContent} would open here.`);
+            });
+        });
+    });
+</script>
+</body>
+</html>
